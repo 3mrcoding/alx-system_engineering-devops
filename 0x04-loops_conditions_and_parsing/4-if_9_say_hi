@@ -1,10 +1,10 @@
 #!/usr/bin/env bash
 # This script is displaying "Best School" 9 times and Hi in the 9th time.
 
-counter=0
+counter=1
 
-while ((counter < 10)); do
-    if [[ $counter -eq 8 ]]; then
+while ((counter <= 10)); do
+    if [[ $counter -eq 9 ]]; then
         echo "Hi"
     else
     echo "Best School"
