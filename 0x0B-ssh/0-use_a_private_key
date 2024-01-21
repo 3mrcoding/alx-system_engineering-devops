@@ -1,2 +1,3 @@
 #!/usr/bin/env bash
+# this script creates the ssh file
 ssh -i ~/.ssh/school ubuntu@18.204.9.181 #-i specifies the path to the private key file that should be used for authentication.
