@@ -1,2 +1,2 @@
 #!/usr/bin/env bash
-ssh -i ~/.ssh/school ubuntu@8.8.8.8 #-i specifies the path to the private key file that should be used for authentication.
+ssh -i ~/.ssh/school ubuntu@18.204.9.181 #-i specifies the path to the private key file that should be used for authentication.
