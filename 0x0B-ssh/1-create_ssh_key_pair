@@ -1,4 +1,5 @@
 #!/usr/bin/env bash
+# creates an RSA key pair.
 ssh-keygen -b 4096 -f ~/.ssh/school -N 'betty'
 
 #-f: This option allows you to specify the filename of the key file. In the context of your script, -f ~/.ssh/school tells ssh-keygen to create the key pair in the ~/.ssh/ directory with the name school.
