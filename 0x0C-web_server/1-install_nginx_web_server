@@ -8,5 +8,5 @@ echo "server {
      root        /var/www/html;
      index       index.html index.htm;
 }" > /etc/nginx/sites-available/default
-sudo sh -c 'echo "Hello World!" > /var/www/html/index.nginx-debian.html'
+sudo sh -c 'echo "Hello World!" > /var/www/html/index.html'
 sudo service nginx restart
