@@ -1,8 +1,7 @@
 #!/usr/bin/env bash
-# comment to explain
-apt-get -y update
-apt-get -y  install nginx
-service nginx start
-sudo sh -c 'echo "Hello World!" > /var/www/html/index.html'
-sed -i 's/listen 80 default_server;/listen 80 default_server;\n\tserver_name _;/' /etc/nginx/sites-available/default
-service nginx start
+# script that configures a new Ubuntu machine to respect some requirements
+sudo apt-get -y update
+sudo apt-get install -y nginx
+sudo ufw allow 'Nginx HTTP'
+sudo sh -c 'echo "Hello World!" > /var/www/html/index.nginx-debian.html'
+sudo service nginx restart
