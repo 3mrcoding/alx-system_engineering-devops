@@ -1,0 +1,11 @@
+#!/usr/bin/env bash
+# Nginx is running as the nginx user.
+
+sudo adduser --system --no-create-home --shell /bin/false nginx
+sudo addgroup --system nginx
+sudo chown -R nginx:nginx /etc/nginx
+sudo chown -R nginx:nginx /var/log/nginx
+sudo chown -R nginx:nginx /var/lib/nginx
+sed -i 's/^user.*;/user nginx;/' /etc/nginx/nginx.conf
+sed -i 's/80/8080/g' /etc/nginx/sites-available/default
+sudo service nginx restart
