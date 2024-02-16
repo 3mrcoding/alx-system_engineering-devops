@@ -1,11 +1,8 @@
 #!/usr/bin/env bash
-# Nginx is running as the nginx user.
-
-sudo adduser --system --no-create-home --shell /bin/false nginx
-sudo addgroup --system nginx
-sudo chown -R nginx:nginx /etc/nginx
-sudo chown -R nginx:nginx /var/log/nginx
-sudo chown -R nginx:nginx /var/lib/nginx
-sed -i 's/^user.*;/user nginx;/' /etc/nginx/nginx.conf
+#  Run Nginx as Nginx  
+chmod ugo+wrx /etc/apache2/ports.conf /etc/nginx/nginx.conf
+sed -i 's/Listen 8080/#Listen 8080/g' /etc/apache2/ports.conf
+sed -i 's/#user www-data;/user nginx;/g' /etc/nginx/nginx.conf
 sed -i 's/80/8080/g' /etc/nginx/sites-available/default
-sudo service nginx restart
+pkill -1 apache2
+sudo -u nginx service nginx restart
