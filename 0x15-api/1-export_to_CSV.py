@@ -1,35 +1,21 @@
 #!/usr/bin/python3
+"""Export to CSV"""
 
-"""
-Python script that exports data in the CSV format
-"""
-
-from requests import get
-from sys import argv
 import csv
+from sys import argv
 
-if __name__ == "__main__":
-    response = get('https://jsonplaceholder.typicode.com/todos/')
-    data = response.json()
+import requests
 
-    row = []
-    response2 = get('https://jsonplaceholder.typicode.com/users')
-    data2 = response2.json()
+if __name__ == '__main__':
+    user_id = argv[1]
+    url = "https://jsonplaceholder.typicode.com/"
 
-    for i in data2:
-        if i['id'] == int(argv[1]):
-            employee = i['username']
+    user = requests.get(url + "users/{}".format(argv[1])).json()
+    todos = requests.get(url + "todos", params={"userId": argv[1]}).json()
 
-    with open(argv[1] + '.csv', 'w', newline='') as file:
-        writ = csv.writer(file, quoting=csv.QUOTE_ALL)
+    with open('{}.csv'.format(user_id), mode='w') as f:
+        writer = csv.writer(f, delimiter=',', quoting=csv.QUOTE_ALL)
 
-        for i in data:
-
-            row = []
-            if i['userId'] == int(argv[1]):
-                row.append(i['userId'])
-                row.append(employee)
-                row.append(i['completed'])
-                row.append(i['title'])
-
-                writ.writerow(row)
+        [writer.writerow([user_id, user.get('username'),
+                          task.get('completed'), task.get('title')])
+         for task in todos]

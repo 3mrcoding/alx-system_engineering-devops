@@ -1,39 +1,29 @@
 #!/usr/bin/python3
+"""Dictionary of list of dictionaries"""
 
-"""
-Python script that exports data in the JSON format.
-"""
-
-from requests import get
 import json
 
-if __name__ == "__main__":
-    response = get('https://jsonplaceholder.typicode.com/todos/')
-    data = response.json()
+import requests
 
-    row = []
-    response2 = get('https://jsonplaceholder.typicode.com/users')
-    data2 = response2.json()
+if __name__ == '__main__':
 
-    new_dict1 = {}
+    url = "https://jsonplaceholder.typicode.com/"
 
-    for j in data2:
+    users = requests.get(url + "users/").json()
 
-        row = []
-        for i in data:
+    dict_format = {}
+    for user in users:
+        todos = requests.get(url + "todos",
+                             params={"userId": user.get('id')}).json()
 
-            new_dict2 = {}
+        dict_format.update({
+            user.get('id'): [
+                {"username": user.get('username'),
+                 "task": task.get('title'),
+                 "completed": task.get('completed')}
+                for task in todos
+            ]
+        })
 
-            if j['id'] == i['userId']:
-
-                new_dict2['username'] = j['username']
-                new_dict2['task'] = i['title']
-                new_dict2['completed'] = i['completed']
-                row.append(new_dict2)
-
-        new_dict1[j['id']] = row
-
-    with open("todo_all_employees.json",  "w") as f:
-
-        json_obj = json.dumps(new_dict1)
-        f.write(json_obj)
+    with open("todo_all_employees.json", mode='w') as f:
+        json.dump(dict_format, f)
